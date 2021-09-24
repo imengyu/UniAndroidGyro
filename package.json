@@ -1,5 +1,5 @@
 {
-  "name": "UniAndroidGyro",
+  "name": "imengyu-UniAndroidGyro",
   "id": "imengyu-UniAndroidGyro",
   "version": "1.0.0",
   "description": "安卓APP端陀螺仪数据采集",
@@ -8,7 +8,7 @@
     "android": {
       "plugins": [{
         "type": "module",
-        "name": "UniAndroidGyro_GyroModule",
+        "name": "imengyu-UniAndroidGyro-GyroModule",
         "class": "uni.imengyu.GyroModule"
       }],
       "integrateType": "aar",
