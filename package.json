@@ -1,6 +1,6 @@
 {
   "name": "UniAndroidGyro",
-  "id": "UniAndroidGyro",
+  "id": "imengyu-UniAndroidGyro",
   "version": "1.0.0",
   "description": "安卓APP端陀螺仪数据采集",
   "_dp_type": "nativeplugin",
