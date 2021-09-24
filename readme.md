@@ -17,7 +17,7 @@
 导入插件
 
 ```js
-const cUniAndroidGyro = uni.requireNativePlugin('GyroModule');
+const cUniAndroidGyro = uni.requireNativePlugin('imengyu-UniAndroidGyro-GyroModule');
 ```
 
 使用示例
