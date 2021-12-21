@@ -10,7 +10,9 @@
 	
 ## 简介
 
-该插件为安卓端APP提供了获取陀螺仪数据的能力，功能大致与[官方API](https://uniapp.dcloud.io/api/system/gyroscope)相同（截至本插件开发时，官方API依然不支持APP端，未来可能会支持？）。
+该插件为安卓端APP提供了获取陀螺仪数据的能力，功能大致与[官方API](https://uniapp.dcloud.io/api/system/gyroscope)相同（截至本插件开发时，官方API依然不支持APP端，未来可能会支持？）。[
+
+![image](https://github.com/imengyu/UniAndroidGyro/blob/main/image.jpg?raw=true)
 
 ## 使用方法
 
