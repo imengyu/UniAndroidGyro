@@ -14,36 +14,31 @@
 
 ## 使用方法
 
-导入插件
-
-```js
-const cUniAndroidGyro = uni.requireNativePlugin('imengyu-UniAndroidGyro-GyroModule');
-```
-
-使用示例
 ```js
 export default {
   data() {
     return {
       gyroUpdateTimer: 0,
+      gyroModule: null,
     }
   },
   beforeDestroy() {
     clearInterval(this.gyroUpdateTimer);
     //停止监听陀螺仪数据
-    cUniAndroidGyro.stopGyro();
+    this.gyroModule.stopGyro();
   },
   onLoad(options) {
+    this.gyroModule = uni.requireNativePlugin('imengyu-UniAndroidGyro-GyroModule');
     //因为uniapp的原因，如果要在页面一进入就监听，需要加一个延时
     setTimeout(() => {
       //开始监听陀螺仪数据
-      cUniAndroidGyro.startGyro({
+      this.gyroModule.startGyro({
         interval: "normal", //监听速度，可选：normal正常（5次秒），ui较缓慢(约16次秒)，game最快(50次秒)。此数据对应于安卓的SensorManager.SENSOR_DELAY_*
       });
 
       this.gyroUpdateTimer = setInterval(() => {
         //获取陀螺仪数据
-        cUniAndroidGyro.getGyroValue((res) => {
+        this.gyroModule.getGyroValue((res) => {
           console.log("x: " + res.x);
           console.log("y: " + res.y);
           console.log("z: " + res.z);
