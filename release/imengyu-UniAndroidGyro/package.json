@@ -19,7 +19,7 @@
         "ios": {
             "plugins": [{
                 "type": "module",
-                "name": "GyroPlugin-GyroModule",
+                "name": "imengyu-UniAndroidGyro-GyroModule",
                 "class": "GyroModule"
             }],
             "frameworks": ["MapKit.framework"],
