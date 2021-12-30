@@ -1,0 +1,30 @@
+{
+    "name": "imengyu-UniAndroidGyro",
+    "id": "imengyu-UniAndroidGyro",
+    "version": "1.0.3",
+    "description": "安卓APP端陀螺仪数据采集",
+    "_dp_type": "nativeplugin",
+    "_dp_nativeplugin": {
+        "android": {
+            "plugins": [
+                {
+                    "type": "module",
+                    "name": "imengyu-UniAndroidGyro-GyroModule",
+                    "class": "uni.imengyu.gyro.GyroModule"
+                }
+            ],
+            "integrateType": "aar",
+            "minSdkVersion": "19"
+        },
+        "ios": {
+            "plugins": [{
+                "type": "module",
+                "name": "GyroPlugin-GyroModule",
+                "class": "GyroModule"
+            }],
+            "frameworks": ["MapKit.framework"],
+            "integrateType": "framework",
+            "deploymentTarget": "9.0"
+        }
+    }
+}

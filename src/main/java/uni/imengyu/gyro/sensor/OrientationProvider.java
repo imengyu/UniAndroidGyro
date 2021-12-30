@@ -63,17 +63,55 @@ public abstract class OrientationProvider implements SensorEventListener {
         currentOrientationQuaternion = new Quaternion();
     }
 
+    private int sensorDelay = SensorManager.SENSOR_DELAY_NORMAL;
+
+    /**
+     * Get the sensorDelay, SensorManager.SENSOR_DELAY_
+     * @return SensorManager.SENSOR_DELAY_
+     */
+    public int getSensorDelay() {
+        return sensorDelay;
+    }
+
+    /**
+     * Set the sensorDelay,
+     * @param sensorDelay SensorManager.SENSOR_DELAY_
+     */
+    public void setSensorDelay(int sensorDelay) {
+        this.sensorDelay = sensorDelay;
+    }
+
+    private boolean running = false;
+
+    protected OnSensorChangedListener onSensorChangedListener = null;
+
+    public interface OnSensorChangedListener {
+        void onSensorChanged();
+    }
+
+    public void setOnSensorChangedListener(OnSensorChangedListener onSensorChangedListener) {
+        this.onSensorChangedListener = onSensorChangedListener;
+    }
+
+    /**
+     * Get running status
+     * @return Is running?
+     */
+    public boolean isRunning() {
+        return running;
+    }
+
     /**
      * Starts the sensor fusion (e.g. when resuming the activity)
      */
     public void start() {
+        running = true;
         // enable our sensor when the activity is resumed, ask for
         // 10 ms updates.
         for (Sensor sensor : sensorList) {
             // enable our sensors when the activity is resumed, ask for
             // 20 ms updates (Sensor_delay_game)
-            sensorManager.registerListener(this, sensor,
-                    SensorManager.SENSOR_DELAY_NORMAL);
+            sensorManager.registerListener(this, sensor, getSensorDelay());
         }
     }
 
@@ -81,6 +119,7 @@ public abstract class OrientationProvider implements SensorEventListener {
      * Stops the sensor fusion (e.g. when pausing/suspending the activity)
      */
     public void stop() {
+        running = false;
         // make sure to turn our sensors off when the activity is paused
         for (Sensor sensor : sensorList) {
             sensorManager.unregisterListener(this, sensor);

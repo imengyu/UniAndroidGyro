@@ -261,6 +261,9 @@ public class ImprovedOrientationSensor1Provider extends OrientationProvider {
             }
             timestamp = event.timestamp;
         }
+
+        if(onSensorChangedListener != null)
+            onSensorChangedListener.onSensorChanged();
     }
 
     /**
