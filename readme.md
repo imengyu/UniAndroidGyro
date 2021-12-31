@@ -9,13 +9,13 @@
 
 |  Android   | iOS  |
 |  ----  | ----  |
-| API Level 19+  | 9-14 |
+| API Level 19+  | 9-15 |
+
+![image](https://github.com/imengyu/UniAndroidGyro/blob/main/image.jpg?raw=true)
 
 ## 简介
 
-该插件为安卓端/IOS端APP提供了获取陀螺仪数据的能力，功能大致与[官方API](https://uniapp.dcloud.io/api/system/gyroscope)相同（截至本插件开发时，官方API依然不支持APP端，未来可能会支持？）。[
-
-![image](https://github.com/imengyu/UniAndroidGyro/blob/main/image.jpg?raw=true)
+该插件为安卓端/IOS APP提供了获取陀螺仪数据的能力，功能大致与[官方API](https://uniapp.dcloud.io/api/system/gyroscope)相同（截至本插件开发时，官方API依然不支持APP端，未来可能会支持？）。
 
 ## 使用方法
 
@@ -36,19 +36,33 @@ export default {
     this.gyroModule = uni.requireNativePlugin('imengyu-UniAndroidGyro-GyroModule');
     //因为uniapp的原因，如果要在页面一进入就监听，需要加一个延时
     setTimeout(() => {
+      //检查设备是否支持陀螺仪
+      if(!this.gyroModule.isGyroAvailable()) {
+        uni.showModal({
+          title: '提示',
+          content: '此设备不支持陀螺仪！',
+        })
+        return;
+      }
+
       //开始监听陀螺仪数据
       this.gyroModule.startGyro({
         interval: "normal", //监听速度，可选：normal正常（5次秒），ui较缓慢(约16次秒)，game最快(50次秒)。此数据对应于安卓的SensorManager.SENSOR_DELAY_*
+      }, (res) => {
+        if(res.success) {
+          this.gyroUpdateTimer = setInterval(() => {
+            //获取陀螺仪数据
+            this.gyroModule.getGyroValue((res) => {
+              console.log("x: " + res.x);
+              console.log("y: " + res.y);
+              console.log("z: " + res.z);
+            });
+          }, 1000);
+        } else {
+          console.error('startGyro failed! ' + rres.errMsg)
+        }
       });
 
-      this.gyroUpdateTimer = setInterval(() => {
-        //获取陀螺仪数据
-        this.gyroModule.getGyroValue((res) => {
-          console.log("x: " + res.x);
-          console.log("y: " + res.y);
-          console.log("z: " + res.z);
-        });
-      }, 1000);
     }, 100)
   },
 }
@@ -162,4 +176,4 @@ interface GyroExecuteReturnValues {
 ### 兼容性特殊说明
 
 * 页面切换并不会停止监听。您需要在页面的 OnUnload 函数中手动停止监听。
-* IOS 无法返回BOOL, 使用字符串代替，返回 `'true'` 表示true，返回 `''` 表示false。
+* IOS 无法返回BOOL, 使用字符串代替，返回 `'true'` 表示true，返回 `''` 或者 `0` 表示false (可使用if判断)。
