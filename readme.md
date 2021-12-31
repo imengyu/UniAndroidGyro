@@ -161,5 +161,5 @@ interface GyroExecuteReturnValues {
 
 ### 兼容性特殊说明
 
-* IOS平台上页面切换并不会停止监听。您需要在页面的 OnUnload 函数中手动停止监听。
-* IOS 无法返回BOOL, 使用字符串代替，返回 `'true'` 表示true，返回 `'false'` 表示false。
+* 页面切换并不会停止监听。您需要在页面的 OnUnload 函数中手动停止监听。
+* IOS 无法返回BOOL, 使用字符串代替，返回 `'true'` 表示true，返回 `''` 表示false。

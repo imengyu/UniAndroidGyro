@@ -21,12 +21,6 @@ public class GyroModule extends WXModule {
     private ImprovedOrientationSensor1Provider sensor1Provider;
 
     @Override
-    public void onActivityCreate() {
-        super.onActivityCreate();
-        SensorManager sensorManager = (SensorManager) mWXSDKInstance.getContext().getSystemService(Context.SENSOR_SERVICE);
-        sensor1Provider = new ImprovedOrientationSensor1Provider(sensorManager);
-    }
-    @Override
     public void onActivityPause() {
         super.onActivityPause();
         if(sensor1Provider != null) {
@@ -42,12 +36,11 @@ public class GyroModule extends WXModule {
             lastPauseState = false;
         }
     }
-    @Override
-    public void onActivityDestroy() {
-        super.onActivityDestroy();
-        if(sensor1Provider != null) {
-            sensor1Provider.stop();
-            sensor1Provider = null;
+
+    private void checkAndInit() {
+        if(sensor1Provider == null) {
+            SensorManager sensorManager = (SensorManager) mWXSDKInstance.getContext().getSystemService(Context.SENSOR_SERVICE);
+            sensor1Provider = new ImprovedOrientationSensor1Provider(sensorManager);
         }
     }
 
@@ -58,6 +51,7 @@ public class GyroModule extends WXModule {
     @UniJSMethod
     @Keep
     public boolean isGyroAvailable() {
+        checkAndInit();
         if(sensor1Provider != null)
             return sensor1Provider.isDeviceSupport();
         return false;
@@ -70,6 +64,7 @@ public class GyroModule extends WXModule {
     @UniJSMethod
     @Keep
     public boolean isGyroStarted() {
+        checkAndInit();
         if(sensor1Provider != null)
             return sensor1Provider.isRunning();
         return false;
@@ -86,6 +81,7 @@ public class GyroModule extends WXModule {
     @UniJSMethod
     @Keep
     public void startGyro(JSONObject options, JSCallback callback) {
+        checkAndInit();
         if(sensor1Provider.isRunning()) {
             if(callback != null) {
                 JSONObject data = new JSONObject();
@@ -148,6 +144,7 @@ public class GyroModule extends WXModule {
     @UniJSMethod
     @Keep
     public void startGyroWithCallback(JSONObject options, JSCallback callback) {
+        checkAndInit();
         if(sensor1Provider.isRunning()) {
             JSONObject data = new JSONObject();
             data.put("success", false);
@@ -176,6 +173,7 @@ public class GyroModule extends WXModule {
     @UniJSMethod
     @Keep
     public void stopGyro(JSCallback callback) {
+        checkAndInit();
         if(!sensor1Provider.isRunning()) {
             if(callback != null) {
                 JSONObject data = new JSONObject();

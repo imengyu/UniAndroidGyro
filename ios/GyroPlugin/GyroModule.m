@@ -49,7 +49,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(getGyroValueSync))
 - (NSDictionary *)makeRetValue:(NSString*)err {
     if(err) {
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @"false", @"success",
+                @false, @"success",
                 err, @"errMsg", nil];
     } else {
         return [NSDictionary dictionaryWithObjectsAndKeys:
@@ -149,12 +149,14 @@ UNI_EXPORT_METHOD_SYNC(@selector(getGyroValueSync))
 
 - (void)getGyroValue:(UniModuleKeepAliveCallback)callback {
     if (callback) {
-        callback([self makeRetValue:NULL], NO);
+        if(!self->_status) callback([self makeRetValue:@"The listener is not running."], NO);
+        else callback([self makeRetValue:NULL], NO);
     }
 }
 
 - (NSDictionary *)getGyroValueSync {
-    return [self makeRetValue:NULL];
+    if(!self->_status) return[self makeRetValue:@"The listener is not running."];
+    else return [self makeRetValue:NULL];
 }
 
 - (void)stopGyro:(UniModuleKeepAliveCallback)callback {
