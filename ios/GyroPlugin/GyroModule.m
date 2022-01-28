@@ -49,7 +49,7 @@ UNI_EXPORT_METHOD_SYNC(@selector(getGyroValueSync))
 - (NSDictionary *)makeRetValue:(NSString*)err {
     if(err) {
         return [NSDictionary dictionaryWithObjectsAndKeys:
-                @false, @"success",
+                @"", @"success",
                 err, @"errMsg", nil];
     } else {
         return [NSDictionary dictionaryWithObjectsAndKeys:
@@ -72,14 +72,14 @@ UNI_EXPORT_METHOD_SYNC(@selector(getGyroValueSync))
     if ([_motionGyro isGyroAvailable])
         return @"true";
     else
-        return @"false";
+        return @"";
 }
 - (NSString *)isGyroStarted {
     [self checkAndCreateManager];
     if (_status)
         return @"true";
     else
-        return @"false";
+        return @"";
 }
 
 - (void)startGyro:(NSDictionary *)options
