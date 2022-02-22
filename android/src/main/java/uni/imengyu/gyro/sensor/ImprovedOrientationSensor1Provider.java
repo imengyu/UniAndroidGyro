@@ -134,6 +134,16 @@ public class ImprovedOrientationSensor1Provider extends OrientationProvider {
     final private Quaternion correctedQuaternion = new Quaternion();
     final private Quaternion interpolatedQuaternion = new Quaternion();
 
+    final private float[] currentRotationVector = new float[4];
+    final private float[] currentGyroscopeValue = new float[3];
+
+    public float[] getCurrentRotationVector() {
+        return currentRotationVector;
+    }
+    public float[] getCurrentGyroscopeValue() {
+        return currentGyroscopeValue;
+    }
+
     private boolean isDeviceSupport = false;
 
     /**
@@ -162,6 +172,11 @@ public class ImprovedOrientationSensor1Provider extends OrientationProvider {
             // Calculate angle. Starting with API_18, Android will provide this value as event.values[3], but if not, we have to calculate it manually.
             SensorManager.getQuaternionFromVector(temporaryQuaternion, event.values);
 
+            currentRotationVector[0] = event.values[0];
+            currentRotationVector[1] = event.values[1];
+            currentRotationVector[2] = event.values[2];
+            currentRotationVector[3] = event.values[3];
+
             // Store in quaternion
             quaternionRotationVector.setXYZW(temporaryQuaternion[1], temporaryQuaternion[2], temporaryQuaternion[3], -temporaryQuaternion[0]);
             if (!positionInitialised) {
@@ -172,6 +187,9 @@ public class ImprovedOrientationSensor1Provider extends OrientationProvider {
 
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             // Process Gyroscope and perform fusion
+            currentGyroscopeValue[0] = event.values[0];
+            currentGyroscopeValue[1] = event.values[1];
+            currentGyroscopeValue[2] = event.values[2];
 
             // This timestep's delta rotation to be multiplied by the current rotation
             // after computing it from the gyro sample data.
@@ -263,7 +281,7 @@ public class ImprovedOrientationSensor1Provider extends OrientationProvider {
         }
 
         if(onSensorChangedListener != null)
-            onSensorChangedListener.onSensorChanged();
+            onSensorChangedListener.onSensorChanged(event.values);
     }
 
     /**

@@ -86,7 +86,7 @@ public abstract class OrientationProvider implements SensorEventListener {
     protected OnSensorChangedListener onSensorChangedListener = null;
 
     public interface OnSensorChangedListener {
-        void onSensorChanged();
+        void onSensorChanged(float[] values);
     }
 
     public void setOnSensorChangedListener(OnSensorChangedListener onSensorChangedListener) {
