@@ -111,6 +111,7 @@ public class GyroModule extends WXModule {
         if(!sensor1Provider.isDeviceSupport()) {
             JSONObject data = new JSONObject();
             data.put("success", false);
+            data.put("notSupport", true);
             data.put("errMsg", "This device does not support gyroscopes");
             callback.invoke(data);
         }

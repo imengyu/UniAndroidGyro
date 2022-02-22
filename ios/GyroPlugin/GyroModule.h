@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *numberGyroX;
 @property (strong, nonatomic) NSNumber *numberGyroY;
 @property (strong, nonatomic) NSNumber *numberGyroZ;
+@property (strong, nonatomic) NSNumber *numberRotX;
+@property (strong, nonatomic) NSNumber *numberRotY;
+@property (strong, nonatomic) NSNumber *numberRotZ;
 @property BOOL status;
 
 @end
